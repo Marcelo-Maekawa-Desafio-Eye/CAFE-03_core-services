@@ -1,5 +1,5 @@
 import { handler as updateMenuHandler } from './updateMenu/handler';
-import { handler as manageOrdersHandler } from './manageOrders/handler';
+import { handler as insertsProductsHandler } from './insertProducts/handler';
 
 export const updateMenu = updateMenuHandler;
-export const manageOrders = manageOrdersHandler;
+export const insertsProducts = insertsProductsHandler;
