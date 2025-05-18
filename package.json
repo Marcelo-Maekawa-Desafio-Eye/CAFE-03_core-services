@@ -1,0 +1,30 @@
+{
+  "name": "cafe-03_core-services",
+  "version": "1.0.0",
+  "description": "fontes:\r https://github.com/AndrewFarley/AWS-Automated-Daily-Instance-AMI-Snapshots\r https://medium.com/@turhan.oz/vanilla-nodejs-mono-repository-with-multiple-aws-lambdas-50914971f11f",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marcelo-Maekawa-Desafio-Eye/CAFE-03_core-services.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marcelo-Maekawa-Desafio-Eye/CAFE-03_core-services/issues"
+  },
+  "homepage": "https://github.com/Marcelo-Maekawa-Desafio-Eye/CAFE-03_core-services#readme",
+  "devDependencies": {
+    "@types/node": "^22.15.18",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "mysql2": "^3.14.1",
+    "redis": "^5.0.1"
+  }
+}
