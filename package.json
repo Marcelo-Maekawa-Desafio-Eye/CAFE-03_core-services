@@ -4,7 +4,8 @@
   "description": "fontes:\r https://github.com/AndrewFarley/AWS-Automated-Daily-Instance-AMI-Snapshots\r https://medium.com/@turhan.oz/vanilla-nodejs-mono-repository-with-multiple-aws-lambdas-50914971f11f",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
