@@ -1,0 +1,10 @@
+[
+  {
+    "name": "insertProducts",
+    "entry": "src/lambdas/insertProducts/index.ts"
+  },
+  {
+    "name": "updateMenu",
+    "entry": "src/lambdas/updateMenu/index.ts"
+  }
+]

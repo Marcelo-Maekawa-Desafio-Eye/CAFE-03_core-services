@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "build:lambda": "node scripts/build-lambdas.js",
+  "deploy:lambda": "node scripts/deploy-lambdas.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "homepage": "https://github.com/Marcelo-Maekawa-Desafio-Eye/CAFE-03_core-services#readme",
   "devDependencies": {
     "@types/node": "^22.15.18",
+    "esbuild": "^0.25.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },

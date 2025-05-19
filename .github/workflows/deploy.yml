@@ -21,14 +21,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build
-
-      - name: Zip insertProducts Lambda
-        run: zip -r lambda_insertProducts.zip -j dist/lambdas/insertProducts/*
-
-      - name: Zip updateMenu Lambda
-        run: zip -r lambda_updateMenu.zip -j dist/lambdas/updateMenu/*
+      - name: Build all Lambdas
+        run: npm run build:lambda
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -37,14 +31,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Update insertProducts Lambda function
-        run: |
-          aws lambda update-function-code \
-            --function-name lambda_insertProducts \
-            --zip-file fileb://lambda_insertProducts.zip
-
-      - name: Update updateMenu Lambda function
-        run: |
-          aws lambda update-function-code \
-            --function-name lambda_updateMenu \
-            --zip-file fileb://lambda_updateMenu.zip
+      - name: Deploy all Lambdas
+        run: npm run deploy:lambda
