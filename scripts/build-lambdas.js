@@ -1,25 +1,33 @@
 const esbuild = require("esbuild");
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 const lambdasList = path.resolve(__dirname, "lambdas.json");
 const lambdas = JSON.parse(fs.readFileSync(lambdasList, "utf8"));
 
 const buildLambda = async ({ name, entry }) => {
     try {
+        const outputDir = `dist/lambdas/${name}`;
+        const outputFile = `${outputDir}/index.js`;
+        const zipFile = `dist/lambdas/${name}.zip`;
+
         await esbuild.build({
             entryPoints: [entry],
             bundle: true,
             platform: "node",
             target: "node18",
-            outfile: `dist/lambdas/${name}/index.js`,
-            //minify: true, 
+            outfile: outputFile,
+            minify: true, 
             //external: [], 
             //sourcemap: true,
             //packages: "external",
             //logLevel: "info",
         });
         console.log(`✔️ Build da função ${name} concluído!`);
+
+        execSync(`zip -j ${zipFile} ${outputFile}`);
+        console.log(`✔️ ZIP da função ${name} criado!`);
     } catch (error) {
         console.error(`❌ Erro ao compilar ${name}:`, error.message);
     }

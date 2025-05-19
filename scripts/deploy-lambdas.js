@@ -7,7 +7,7 @@ const lambdas = JSON.parse(fs.readFileSync(lambdasList, "utf8"));
 
 const deployLambda = ({ name }) => {
     try {
-        const zipFile = `dist/lambdas/${name}/index.js`;
+        const zipFile = `dist/lambdas/${name}.zip`;
         console.log(`🚀 Deploying Lambda: ${name}`);
 
         const command = `aws lambda update-function-code --function-name ${name} --zip-file fileb://${zipFile}.zip`;
