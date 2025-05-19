@@ -13,11 +13,11 @@ const buildLambda = async ({ name, entry }) => {
             platform: "node",
             target: "node18",
             outfile: `dist/lambdas/${name}/index.js`,
-            minify: true, 
-            external: [], 
-            sourcemap: true,
-            packages: "external",
-            logLevel: "info",
+            //minify: true, 
+            //external: [], 
+            //sourcemap: true,
+            //packages: "external",
+            //logLevel: "info",
         });
         console.log(`✔️ Build da função ${name} concluído!`);
     } catch (error) {
