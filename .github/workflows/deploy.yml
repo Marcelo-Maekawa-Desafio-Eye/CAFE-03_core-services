@@ -25,10 +25,10 @@ jobs:
         run: npm run build
 
       - name: Zip insertProducts Lambda
-        run: zip -r lambda_insertProducts.zip dist/lambdas/insertProducts
+        run: zip -r lambda_insertProducts.zip -j dist/lambdas/insertProducts/*
 
       - name: Zip updateMenu Lambda
-        run: zip -r lambda_updateMenu.zip dist/lambdas/updateMenu
+        run: zip -r lambda_updateMenu.zip -j dist/lambdas/updateMenu/*
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
