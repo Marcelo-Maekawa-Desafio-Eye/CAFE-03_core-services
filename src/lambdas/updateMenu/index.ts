@@ -1,15 +1,15 @@
 import { DbConfig } from '../../config/dbConfig';
-import { RedisClient } from '../../utils/redisClient';
+import { connectRedis, redisClient } from '../../utils/redisClient';
 import { Logger } from '../../utils/logger';
 import { Product } from '../../interfaces/product.interface';
 
 export const handler = async (): Promise<void> => {
     try {
-
         Logger.log('[redis] Starting update');
 
+        await connectRedis();
+
         const db = DbConfig.getInstance();
-        const redis = RedisClient.getInstance();
 
         const [rows] = await db.query<Product[]>(`
             SELECT 
@@ -29,28 +29,28 @@ export const handler = async (): Promise<void> => {
             return;
         }
 
-        await redis.set(
+        await redisClient.set(
             'menu:active',
             JSON.stringify(rows)
         );
-
         Logger.log(`[redis] Updated menu: ${rows.length} active products`);
 
         for (const product of rows) {
-
-            await redis.set(
+            await redisClient.set(
                 `product:${product.id}`,
                 JSON.stringify(product)
             );
-
             Logger.log(`[redis] Updated product: ${product.name}`);
         }
 
         Logger.log('[redis] Update success');
-
-    } catch (error) {
         
-        Logger.error(`[redis] ERROR updating: ${error}`);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            Logger.error(`[redis] ERROR updating: ${error.message}`);
+        } else {
+            Logger.error(`[redis] ERROR updating: Unknown error occurred`);
+        }
         throw new Error('Redis update failed');
     }
 };

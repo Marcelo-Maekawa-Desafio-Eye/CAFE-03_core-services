@@ -1,39 +1,42 @@
-import { RedisClientType, createClient } from 'redis';
+import { createClient } from 'redis';
 
 const redisHost = process.env.REDIS_HOST;
 const redisPort = process.env.REDIS_PORT || '6379';
-const redisUser = process.env.REDIS_USER || 'default';
-const redisPassword = process.env.REDIS_PASSWORD;
 
-export class RedisClient {
-    private static instance: RedisClientType;
+if (!redisHost) {
+    throw new Error('[redis] Missing required Redis configuration.');
+}
 
-    private constructor() {}
+const redisUrl = `rediss://${redisHost}:${redisPort}`;
 
-    public static getInstance(): RedisClientType {
-        if (!RedisClient.instance) {
-            //const redisUrl = `redis://:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`;
-            //const redisUrl = `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`;
-            const redisUrl = `redis://${redisUser}:${redisPassword}@${redisHost}:${redisPort}`;
+export const redisClient = createClient({
+    url: redisUrl,
+    socket: {
+        host: redisHost,
+        port: parseInt(redisPort),
+        tls: true,
+        rejectUnauthorized: false,
+    },
+});
 
-            RedisClient.instance = createClient({
-                url: redisUrl
-            });
+redisClient.on('error', (err: unknown) => {
+    if (err instanceof Error) {
+        console.error('[redis] Connection error:', err.message);
+    } else {
+        console.error('[redis] Connection error: Unknown error occurred');
+    }
+});
 
-            RedisClient.instance.on('connect', () => {
-                console.log(`Redis connected at ${process.env.REDIS_HOST}:${process.env.REDIS_PORT}.`);
-            });
-
-            RedisClient.instance.on('error', (err) => {
-                console.error('Redis client Error:', err);
-            });
-
-            RedisClient.instance.connect().catch((err) => {
-                console.error('Redis failed to connect:', err);
-            });
+export async function connectRedis() {
+    try {
+        await redisClient.connect();
+        console.log('[redis] Connected to', redisUrl);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            console.error('[redis] Connection failed:', err.message);
+        } else {
+            console.error('[redis] Connection failed: Unknown error occurred');
         }
-
-        return RedisClient.instance;
-
+        throw new Error('Redis connection failed');
     }
 }
