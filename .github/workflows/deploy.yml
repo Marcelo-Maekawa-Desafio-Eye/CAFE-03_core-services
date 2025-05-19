@@ -33,3 +33,6 @@ jobs:
 
       - name: Deploy all Lambdas
         run: npm run deploy:lambda
+       
+      - name: List contents of ZIP
+        run: unzip -l dist/lambdas/lambda_insertProducts.zip
