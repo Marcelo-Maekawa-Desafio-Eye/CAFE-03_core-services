@@ -1,10 +1,12 @@
 [
   {
-    "name": "insertProducts",
+    "handlerName": "insertProducts",
+    "lambdaName": "lambda_insertProducts",
     "entry": "src/lambdas/insertProducts/index.ts"
   },
   {
-    "name": "updateMenu",
+    "handlerName": "updateMenu",
+    "lambdaName": "lambda_updateMenu",
     "entry": "src/lambdas/updateMenu/index.ts"
   }
 ]

@@ -6,11 +6,11 @@ const { execSync } = require("child_process");
 const lambdasList = path.resolve(__dirname, "lambdas.json");
 const lambdas = JSON.parse(fs.readFileSync(lambdasList, "utf8"));
 
-const buildLambda = async ({ name, entry }) => {
+const buildLambda = async ({ handlerName, lambdaName, entry }) => {
     try {
-        const outputDir = `dist/lambdas/${name}`;
+        const outputDir = `dist/lambdas/${handlerName}`;
         const outputFile = `${outputDir}/index.js`;
-        const zipFile = `dist/lambdas/${name}.zip`;
+        const zipFile = `dist/lambdas/${handlerName}.zip`;
 
         await esbuild.build({
             entryPoints: [entry],
@@ -24,12 +24,12 @@ const buildLambda = async ({ name, entry }) => {
             //packages: "external",
             //logLevel: "info",
         });
-        console.log(`✔️ Build da função ${name} concluído!`);
+        console.log(`✔️ Build da função ${handlerName} concluído!`);
 
         execSync(`zip -j ${zipFile} ${outputFile}`);
-        console.log(`✔️ ZIP da função ${name} criado!`);
+        console.log(`✔️ ZIP da função ${handlerName} criado!`);
     } catch (error) {
-        console.error(`❌ Erro ao compilar ${name}:`, error.message);
+        console.error(`❌ Erro ao compilar ${handlerName}:`, error.message);
     }
 };
 

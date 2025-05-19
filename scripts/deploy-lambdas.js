@@ -5,17 +5,17 @@ const { execSync } = require("child_process");
 const lambdasList = path.resolve(__dirname, "lambdas.json");
 const lambdas = JSON.parse(fs.readFileSync(lambdasList, "utf8"));
 
-const deployLambda = ({ name }) => {
+const deployLambda = ({ handlerName, lambdaName }) => {
     try {
-        const zipFile = `dist/lambdas/${name}.zip`;
-        console.log(`🚀 Deploying Lambda: ${name}`);
+        const zipFile = `dist/lambdas/${handlerName}.zip`;
+        console.log(`🚀 Deploying Lambda: ${handlerName}`);
 
-        const command = `aws lambda update-function-code --function-name ${name} --zip-file fileb://${zipFile}`;
+        const command = `aws lambda update-function-code --function-name ${lambdaName} --zip-file fileb://${zipFile}`;
         execSync(command, { stdio: "inherit" });
 
-        console.log(`✔️ Deploy da função ${name} concluído!`);
+        console.log(`✔️ Deploy da função ${handlerName} concluído!`);
     } catch (error) {
-        console.error(`❌ Erro ao fazer deploy de ${name}:`, error.message);
+        console.error(`❌ Erro ao fazer deploy de ${handlerName}:`, error.message);
     }
 };
 
